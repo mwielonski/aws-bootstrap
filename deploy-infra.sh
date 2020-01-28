@@ -1,6 +1,7 @@
 #!/bin/bash
-STACK_NAME=awsbootstrap 
-REGION=us-east-2 
+#set -x
+STACK_NAME=awsbootstrap
+REGION=us-east-2
 CLI_PROFILE=awsbootstrap
 EC2_INSTANCE_TYPE=t2.micro
 
@@ -23,7 +24,6 @@ aws2 cloudformation deploy \
   --stack-name $STACK_NAME-setup \
   --template-file setup.yml \
   --no-fail-on-empty-changeset \
-  --no-execute-changeset \
   --capabilities CAPABILITY_NAMED_IAM \
   --parameter-overrides \
      CodePipelineBucket=$CODEPIPELINE_BUCKET
@@ -49,5 +49,5 @@ aws2 cloudformation deploy \
 if [ $? -eq 0 ]; then
   aws2 cloudformation list-exports \
      --profile awsbootstrap \
-     --query "Exports[?Name=='InstanceEndpoint'].Value"
+     --query "Exports[?starts_with(Name,'InstanceEndpoint')].Value"
 fi
