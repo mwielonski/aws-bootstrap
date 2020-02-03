@@ -46,8 +46,15 @@ aws2 cloudformation deploy \
   CodePipelineBucket=$CODEPIPELINE_BUCKET
 
 # If the deploy succeeded, show the DNS name of the created instance
+#if [ $? -eq 0 ]; then
+#  aws2 cloudformation list-exports \
+#     --profile awsbootstrap \
+#     --query "Exports[?starts_with(Name,'InstanceEndpoint')].Value"
+#fi
+# If the deploy succeeded, show the DNS name of the created instance
 if [ $? -eq 0 ]; then
   aws2 cloudformation list-exports \
      --profile awsbootstrap \
-     --query "Exports[?starts_with(Name,'InstanceEndpoint')].Value"
+     --query "Exports[?ends_with(Name,'LBEndpoint')].Value"
 fi
+
