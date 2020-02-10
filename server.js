@@ -1,5 +1,6 @@
 const { hostname } = require('os'); 
 const http = require('http');
+const STACK_NAME = process.env.STACK_NAME || "Unknown Stack";
 const message = `Hello World from ${hostname()}\n`; 
 const port = 8080; 
 
